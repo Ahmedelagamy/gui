@@ -37,10 +37,11 @@ st.title("Piovis Automate")
 st.sidebar.title('Review analyzer GUI')
 st.markdown("This application is a streamlit deployment to automate analysis")
 
-uploaded_file = st.file_uploader('upload the dataset you want to analyze')
+uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
-  df = st.dataframe(uploaded_file)
-  st.write(dataframe)
+  df = pd.read_excel(uploaded_file)
+  st.write(df)
+    
 # Data preprocessing
 # noinspection PyArgumentList
 df = pd.read_excel(file)
