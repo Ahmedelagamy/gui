@@ -44,7 +44,7 @@ if uploaded_file is not None:
     
 # Data preprocessing
 # noinspection PyArgumentList
-df = pd.read_excel(file)
+
 df.dropna(subset=['review-text'], inplace=True)
 df.drop(index=1637, axis=0, inplace=True)
 
