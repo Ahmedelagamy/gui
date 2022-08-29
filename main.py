@@ -39,7 +39,7 @@ st.markdown("This application is a streamlit deployment to automate analysis")
 
 uploaded_file = st.file_uploader('upload the dataset you want to analyze')
 if uploaded_file is not None:
-  df = pd.read_csv(uploaded_file)
+  df = st.dataframe(uploaded_file)
   st.write(dataframe)
 # Data preprocessing
 # noinspection PyArgumentList
