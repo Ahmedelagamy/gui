@@ -44,10 +44,6 @@ if uploaded_file is not None:
     
 # Data preprocessing
 # noinspection PyArgumentList
-
-df.dropna(subset=['review-text'], inplace=True)
-df.drop(index=1637, axis=0, inplace=True)
-
 # Splitting data
 bad_reviews = df[df['TextBlob_Analysis'] == 'Negative']
 good_reviews = df[df['TextBlob_Analysis'] == 'Positive']
