@@ -48,9 +48,6 @@ if uploaded_file is not None:
 df.dropna(subset=['review-text'], inplace=True)
 df.drop(index=1637, axis=0, inplace=True)
 
-# Displaying DataFrame
-st.dataframe(df)
-
 # Splitting data
 bad_reviews = df[df['TextBlob_Analysis'] == 'Negative']
 good_reviews = df[df['TextBlob_Analysis'] == 'Positive']
@@ -58,7 +55,7 @@ good_reviews = df[df['TextBlob_Analysis'] == 'Positive']
 # Minor mod
 st.header('Select Stop Words')
 
-custom_stopwords = st.text_input('enter stop word')
+custom_stopwords = st.text_input('Enter Stopword')
 
 
 def clean_text(dataframe, col_name):
