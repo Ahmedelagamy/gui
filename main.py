@@ -38,6 +38,7 @@ st.sidebar.title('Review analyzer GUI')
 st.markdown("This application is a streamlit deployment to automate analysis")
 
 uploaded_file = st.file_uploader("Choose a file")
+
 if uploaded_file is not None:
   df = pd.read_excel(uploaded_file)
   st.write(df)
