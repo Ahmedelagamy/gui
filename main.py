@@ -117,7 +117,7 @@ def clean_text(dataframe, col_name):
 # Applying function
 good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
-final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis','detect']).count()
+final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
 # Tab Structure
 tab = st.sidebar.radio('Select one:', ['Positive Review', 'Negative Review'])
 
