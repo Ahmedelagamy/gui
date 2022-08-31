@@ -81,7 +81,7 @@ def clean_text(dataframe, col_name):
     stop_words = set(stopwords.words("english"))
 
     # Creating a list of custom stopwords
-    new_words = custom_stopwords.split(',')
+    new_words = set(custom_stopwords.split(', '))
     stop_words = stop_words.union(new_words)
 
     docs = []
