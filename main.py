@@ -211,6 +211,4 @@ st.write(final_df)
 st.download_button(
      label="Download insights as CSV",
      data=final_df,
-     file_name='large_df.csv',
-     mime='text/csv',
- )
+     file_name='large_df.csv')
