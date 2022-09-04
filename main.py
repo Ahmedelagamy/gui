@@ -85,7 +85,7 @@ st.header('Select Stop Words')
 
 custom_stopwords = st.text_input('Enter Stopword')
 cutom_stopwords = custom_stopwords.split()
-stop_words = set(stopwords.words("english")).union(custom_stopwords)
+final_stop_words = set(stopwords.words("english")).union(custom_stopwords)
 
 def clean_text(dataframe, col_name):
     
@@ -94,7 +94,7 @@ def clean_text(dataframe, col_name):
     word = "inversely"
     print("stemming:", stem.stem(word))
     print("lemmatization:", lem.lemmatize(word, "v"))
-    stop_words = stop_words
+    stop_words = final_stop_words
 
     docs = []
     for i in dataframe[col_name]:
