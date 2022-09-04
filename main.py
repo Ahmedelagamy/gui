@@ -143,7 +143,6 @@ with tab1:
     
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
-    st.image(freq_words(good_reviews.groupby('asin')['review-text'].sum()))
     
     topic_model_1 = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.6, verbose=True, nr_topics='auto')
 
