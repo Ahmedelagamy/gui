@@ -160,9 +160,9 @@ if tab == 'Positive Review':
                                                  separator=", ")
     st.write(good_model.get_representative_docs(doc_num))
 
-    st.write(good_model.visualize_topics(doc_num))
+    st.write(good_model.visualize_topics())
 
-    st.write(good_model.visualize_barchart(doc_num))
+    st.write(good_model.visualize_barchart())
 
     st.write(good_model.visualize_heatmap())
     
