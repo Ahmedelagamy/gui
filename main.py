@@ -208,7 +208,9 @@ final_df.drop(['TextBlob_Polarity','review-text'], axis= 1, inplace = True)
 
 st.write(final_df)
 
+bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
 st.download_button(
      label="Download insights as CSV",
-     data=final_df,
+     data=bad_topic_info,
+     mime=“text/csv”,
      file_name='large_df.csv')
