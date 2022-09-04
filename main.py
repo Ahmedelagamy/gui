@@ -200,7 +200,7 @@ with tab2:
     st.write(bad_topic_info)
 
 
-final_df.drop(['TextBlob_Subjectivity','TextBlob_Polarity', 'Unnamed: 0','review-text'], axis= 1, inplace = True)
+final_df.drop(['TextBlob_Polarity','review-text'], axis= 1, inplace = True)
 
 st.write(final_df)
 
