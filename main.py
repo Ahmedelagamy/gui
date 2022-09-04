@@ -16,13 +16,6 @@ nltk.download('omw-1.4')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 nltk.download('wordnet')
-from nltk.stem.wordnet import WordNetLemmatizerimport re
-import nltk
-nltk.download('stopwords')
-nltk.download('omw-1.4')
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-nltk.download('wordnet')
 from nltk.stem.wordnet import WordNetLemmatizer
 
 # function to plot most frequent terms
