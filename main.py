@@ -172,14 +172,14 @@ with tab2:
     """# Bad reviews model insight"""
     # Feature Engineering
     st.subheader('Negative Reviews')
-    st.dataframe(df[df['TextBlob_Analysis'] == 'Negative']['review-text'])
+    st.dataframe(bad_reviews)
     topic_model_2 = BERTopic(embedding_model='paraphrase-MiniLM-L3-v2', verbose=True, nr_topics='auto',
                              calculate_probabilities=True)
 
     bad_model = topic_model_2.fit(bad_reviews)
     # Topics
     st.write(bad_model.get_topic_info())
-    doc_num_2 = int(st.number_input('enter the number of topic to explore'))
+    doc_num_2 = int(st.number_input('enter the number of topic to explore', key= 2))
     # Labels
     st.write(bad_model.generate_topic_labels(nr_words=6, separator=", "))
     # Representative docs
