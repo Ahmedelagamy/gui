@@ -11,6 +11,21 @@ from textblob import TextBlob
 from umap import UMAP
 
 
+# function to plot most frequent terms
+def freq_words(x, terms = 30):
+  all_words = ' '.join([text for text in x])
+  all_words = all_words.split()
+
+  fdist = FreqDist(all_words)
+  words_df = pd.DataFrame({'word':list(fdist.keys()), 'count':list(fdist.values())})
+
+  # selecting top 20 most frequent words
+  d = words_df.nlargest(columns="count", n = terms) 
+  plt.figure(figsize=(20,5))
+  ax = sns.barplot(data=d, x= "word", y = "count")
+  ax.set(ylabel = 'Count')
+  plt.show()
+
 # Functions for interpreting TextBlob analysis
 def get_subjectivity(text):
     return TextBlob(text).sentiment.subjectivity
@@ -43,7 +58,6 @@ if uploaded_file is not None:
   df = pd.read_excel(uploaded_file)
   st.write(df)
 
-df['TextBlob_Subjectivity'] = df['review-text'].astype(str).apply(get_subjectivity)
 df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
 
 # Applying Analysis Function
@@ -51,7 +65,7 @@ df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
 df['TextBlob_Analysis'] = df['TextBlob_Polarity'].apply(get_analysis)
 
 # Data preprocessing
-# noinspection PyArgumentList
+
 # Splitting data
 bad_reviews = df[df['TextBlob_Analysis'] == 'Negative']
 good_reviews = df[df['TextBlob_Analysis'] == 'Positive']
@@ -81,7 +95,7 @@ def clean_text(dataframe, col_name):
     stop_words = set(stopwords.words("english"))
 
     # Creating a list of custom stopwords
-    new_words = set(custom_stopwords.split(', '))
+    new_words = set(custom_stopwords.split(' '))
     stop_words = stop_words.union(new_words)
 
     docs = []
@@ -119,15 +133,19 @@ good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
 # Tab Structure
-tab = st.sidebar.radio('Select one:', ['Positive Review', 'Negative Review'])
+tab1, tab2 = st.tabs('Select one:', ['Positive Review', 'Negative Review'])
+
+# Insert containers separated into tabs:
+tab1.write("this is pros analyzer")
+tab2.write("this is cons analyzer")
 
 # Models
-if tab == 'Positive Review':
+with tab1:
+    
     st.subheader('Positive Reviews')
     st.dataframe(df[df['TextBlob_Analysis'] == 'Positive']['review-text'])
     umap_model = UMAP(n_neighbors=15, n_components=5, min_dist=0.0, metric='cosine')
-    topic_model_1 = BERTopic(diversity=.9, embedding_model='paraphrase-MiniLM-L3-v2', verbose=True,
-                             calculate_probabilities=True, nr_topics=15, umap_model=umap_model)
+    topic_model_1 = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.6, verbose=True, nr_topics='auto')
 
     good_model = topic_model_1.fit(good_reviews)
 
@@ -151,7 +169,7 @@ if tab == 'Positive Review':
     good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     st.write(good_topic_info)
 
-else:
+with tab2:
 
     """# Bad reviews model insight"""
     # Feature Engineering
