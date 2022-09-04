@@ -202,15 +202,15 @@ else:
     bad_topic_info = bad_model.get_topic_info()
     bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
     st.write(bad_topic_info)
-
+    bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
 
 final_df.drop(['TextBlob_Polarity','review-text'], axis= 1, inplace = True)
 
 st.write(final_df)
 
-bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
+
 st.download_button(
-     label="Download insights as CSV",
+     label="Download cons",
      data=bad_topic_info,
      mime='text/csv',
      file_name='large_df.csv')
