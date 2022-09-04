@@ -143,6 +143,7 @@ with tab1:
     
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
+    st.write(freq_words(good_reviews))
     umap_model = UMAP(n_neighbors=15, n_components=5, min_dist=0.0, metric='cosine')
     topic_model_1 = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.6, verbose=True, nr_topics='auto')
 
