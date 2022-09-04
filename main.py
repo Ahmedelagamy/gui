@@ -212,5 +212,5 @@ bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
 st.download_button(
      label="Download insights as CSV",
      data=bad_topic_info,
-     mime=“text/csv”,
+     mime='text/csv',
      file_name='large_df.csv')
