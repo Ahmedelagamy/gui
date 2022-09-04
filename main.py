@@ -132,7 +132,7 @@ bad_reviews = clean_text(bad_reviews, 'review-text')
 
 final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
 # Tab Structure
-tab = st.sidebar.tabs(['Positive Review', 'Negative Review'])
+tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
 
