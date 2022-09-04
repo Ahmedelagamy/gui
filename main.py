@@ -129,6 +129,7 @@ def clean_text(dataframe, col_name):
 # Applying function
 good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
+
 final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
 # Tab Structure
 tab1, tab2 = st.tabs(['Positive Review', 'Negative Review'])
@@ -151,7 +152,7 @@ with tab1:
 
     """# Good Reviews model insight"""
 
-    doc_num = int(st.number_input('enter the number of topic to explore'))
+    doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
 
     st.write(good_model.get_topic_info())
 
@@ -179,7 +180,7 @@ with tab2:
     bad_model = topic_model_2.fit(bad_reviews)
     # Topics
     st.write(bad_model.get_topic_info())
-    doc_num_2 = int(st.number_input('enter the number of topic to explore', key= 2))
+    doc_num_2 = int(st.number_input('enter the number of topic to explore', key= 2, value= 0))
     # Labels
     st.write(bad_model.generate_topic_labels(nr_words=6, separator=", "))
     # Representative docs
