@@ -132,14 +132,14 @@ bad_reviews = clean_text(bad_reviews, 'review-text')
 
 final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
 # Tab Structure
-tab1, tab2 = st.tabs(['Positive Review', 'Negative Review'])
+tab1, tab2 = st.sidebar.tabs(['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
 tab1.write("this is pros analyzer")
 tab2.write("this is cons analyzer")
 
 # Models
-with tab1:
+if st.sidebar.tabs==tab1':
     
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
@@ -155,7 +155,10 @@ with tab1:
     doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
 
     st.write(good_model.get_topic_info())
-
+    topic_labels = good_model.generate_topic_labels(nr_words=3,
+                                                 topic_prefix=False,
+                                                 word_length=10,
+                                                 separator=", ")
     st.write(good_model.get_representative_docs(doc_num))
 
     st.write(good_model.visualize_topics(doc_num))
@@ -169,7 +172,7 @@ with tab1:
     good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     st.write(good_topic_info)
 
-with tab2:
+else:
 
     """# Bad reviews model insight"""
     # Feature Engineering
