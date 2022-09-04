@@ -9,7 +9,21 @@ import streamlit as st
 from bertopic import BERTopic
 from textblob import TextBlob
 from umap import UMAP
-
+import re
+import nltk
+nltk.download('stopwords')
+nltk.download('omw-1.4')
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+nltk.download('wordnet')
+from nltk.stem.wordnet import WordNetLemmatizerimport re
+import nltk
+nltk.download('stopwords')
+nltk.download('omw-1.4')
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+nltk.download('wordnet')
+from nltk.stem.wordnet import WordNetLemmatizer
 
 # function to plot most frequent terms
 def freq_words(x, terms = 30):
@@ -52,16 +66,19 @@ st.title("Piovis Automate")
 st.sidebar.title('Review analyzer GUI')
 st.markdown("This application is a streamlit deployment to automate analysis")
 
-uploaded_file = st.file_uploader("Choose a file")
 
+# Loading Data
+uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
   df = pd.read_excel(uploaded_file)
   st.write(df)
+else:
+  st.stop()
+  
 
+
+# Applying sentiment analysis
 df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
-
-# Applying Analysis Function
-
 df['TextBlob_Analysis'] = df['TextBlob_Polarity'].apply(get_analysis)
 
 # Data preprocessing
@@ -74,29 +91,17 @@ good_reviews = df[df['TextBlob_Analysis'] == 'Positive']
 st.header('Select Stop Words')
 
 custom_stopwords = st.text_input('Enter Stopword')
-
+cutom_stopwords = custom_stopwords.split()
+stop_words = set(stopwords.words("english")) +set(custom_stopwords)
 
 def clean_text(dataframe, col_name):
-    import re
-    import nltk
-    nltk.download('stopwords')
-    nltk.download('omw-1.4')
-    from nltk.corpus import stopwords
-    from nltk.stem.porter import PorterStemmer
-    nltk.download('wordnet')
-    from nltk.stem.wordnet import WordNetLemmatizer
+    
     lem = WordNetLemmatizer()
     stem = PorterStemmer()
     word = "inversely"
     print("stemming:", stem.stem(word))
     print("lemmatization:", lem.lemmatize(word, "v"))
-
-    # Creating a list of stop words and adding custom stopwords
-    stop_words = set(stopwords.words("english"))
-
-    # Creating a list of custom stopwords
-    new_words = set(custom_stopwords.split(' '))
-    stop_words = stop_words.union(new_words)
+    stop_words = stop_words
 
     docs = []
     for i in dataframe[col_name]:
@@ -205,3 +210,10 @@ with tab2:
 final_df.drop(['TextBlob_Subjectivity','TextBlob_Polarity', 'Unnamed: 0','review-text'], axis= 1, inplace = True)
 
 st.write(final_df)
+
+st.download_button(
+     label="Download insights as CSV",
+     data=final_df,
+     file_name='large_df.csv',
+     mime='text/csv',
+ )
