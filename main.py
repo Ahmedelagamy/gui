@@ -135,8 +135,7 @@ final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'Tex
 tab = st.sidebar.tabs(['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-tab1.write("this is pros analyzer")
-tab2.write("this is cons analyzer")
+
 
 # Models
 if tab == 'Positive Review':
