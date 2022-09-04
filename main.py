@@ -139,7 +139,7 @@ tab1.write("this is pros analyzer")
 tab2.write("this is cons analyzer")
 
 # Models
-if st.sidebar.tabs==tab1':
+if st.sidebar.tabs==tab1:
     
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
