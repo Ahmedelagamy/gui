@@ -144,7 +144,9 @@ if tab == 'Positive Review':
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
     
-    
+    good_reviews = good_reviews["review-text"].to_list()
+    if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
+       good_reviews.extend(good_reviews)
 
     good_model = topic_model.fit(good_reviews)
 
@@ -181,7 +183,10 @@ else:
     """# Bad reviews model insight"""
     # Feature Engineering
     st.subheader('Negative Reviews')
-    
+    #Accounting for small dataset
+    bad_reviews = bad_reviews["review-text"].to_list()
+    if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
+       bad_reviews.extend(bad_reviews)
     st.dataframe(bad_reviews)
     bad_model = topic_model.fit(bad_reviews)
     # Topics
