@@ -179,7 +179,7 @@ with tab2:
     bad_model = topic_model_2.fit(bad_reviews)
     # Topics
     st.write(bad_model.get_topic_info())
-    doc_num = int(st.number_input('enter the number of topic to explore'))
+    doc_num_2 = int(st.number_input('enter the number of topic to explore'))
     # Labels
     st.write(bad_model.generate_topic_labels(nr_words=6, separator=", "))
     # Representative docs
