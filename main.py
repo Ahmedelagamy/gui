@@ -69,7 +69,7 @@ else:
   st.stop()
   
 
-
+df.dropna(inplace=True)
 # Applying sentiment analysis
 df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
 df['TextBlob_Analysis'] = df['TextBlob_Polarity'].apply(get_analysis)
