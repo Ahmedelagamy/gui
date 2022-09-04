@@ -131,6 +131,7 @@ good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 
 final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
+
 # Tab Structure
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
@@ -153,22 +154,23 @@ if tab == 'Positive Review':
 
     
 
-    st.write(good_model.get_topic_info())
+    good_model.get_topic_info()
+    
     topic_labels = good_model.generate_topic_labels(nr_words=3,
                                                  topic_prefix=False,
                                                  word_length=10,
                                                  separator=", ")
-    topic_model.set_topic_labels(topic_labels)
-    
-    doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
-    st.write(good_model.get_representative_docs(doc_num))
-
+    st.write(topic_model.set_topic_labels(topic_labels))
+ 
     st.write(good_model.visualize_topics())
 
     st.write(good_model.visualize_barchart())
 
     st.write(good_model.visualize_heatmap())
     
+    doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
+    
+    st.write(good_model.get_representative_docs(doc_num))
     # pros
     good_topic_info = good_model.get_topic_info()
     good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
@@ -212,6 +214,7 @@ final_df.drop(['TextBlob_Polarity','review-text'], axis= 1, inplace = True)
 st.write(final_df)
 
 final_df =final_df.to_csv(index=False).encode('utf-8')
+
 st.download_button(
      label="Download cons",
      data=final_df,
