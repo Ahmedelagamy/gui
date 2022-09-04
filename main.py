@@ -85,7 +85,7 @@ st.header('Select Stop Words')
 
 custom_stopwords = st.text_input('Enter Stopword')
 cutom_stopwords = custom_stopwords.split()
-stop_words = set(stopwords.words("english")) +set(custom_stopwords)
+stop_words = set(stopwords.words("english")) +custom_stopwords
 
 def clean_text(dataframe, col_name):
     
