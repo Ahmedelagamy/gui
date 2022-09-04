@@ -158,11 +158,12 @@ with tab1:
 
     st.write(good_model.get_representative_docs(doc_num))
 
-    st.write(good_model.visualize_topics())
+    st.write(good_model.visualize_topics(doc_num))
 
-    st.write(good_model.visualize_barchart())
+    st.write(good_model.visualize_barchart(doc_num))
 
     st.write(good_model.visualize_heatmap())
+    
     # pros
     good_topic_info = good_model.get_topic_info()
     good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
@@ -173,18 +174,18 @@ with tab2:
     """# Bad reviews model insight"""
     # Feature Engineering
     st.subheader('Negative Reviews')
+    
     st.dataframe(bad_reviews)
-    topic_model_2 = BERTopic(embedding_model='paraphrase-MiniLM-L3-v2', verbose=True, nr_topics='auto',
-                             calculate_probabilities=True)
-
-    bad_model = topic_model_2.fit(bad_reviews)
+    bad_model = topic_model_1.fit(bad_reviews)
     # Topics
+    
     st.write(bad_model.get_topic_info())
     doc_num_2 = int(st.number_input('enter the number of topic to explore', key= 2, value= 0))
     # Labels
     st.write(bad_model.generate_topic_labels(nr_words=6, separator=", "))
     # Representative docs
-    st.write(bad_model.get_representative_docs(doc_num))
+    st.write(bad_model.get_representative_docs(doc_num_2))
+    
     # Topic visualization
     # Bar chart
     st.write(bad_model.visualize_barchart())
