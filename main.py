@@ -146,7 +146,7 @@ if tab == 'Positive Review':
     
     
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-       good_reviews.extend(good_reviews)
+       good_reviews.extend(2*good_reviews)
 
     good_model = topic_model.fit(good_reviews)
 
@@ -188,7 +188,7 @@ else:
     if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
        bad_reviews.extend(bad_reviews)
     st.dataframe(bad_reviews)
-    bad_model = topic_model.fit(bad_reviews)
+    bad_model = topic_model.fit(2*bad_reviews)
     # Topics
     
     st.write(bad_model.get_topic_info())
