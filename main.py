@@ -150,7 +150,7 @@ def clean_text(dataframe, col_name):
 good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 
-final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).mean()
+final_df= df.groupby(['asin']).mean()
 
 # Tab Structure
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
