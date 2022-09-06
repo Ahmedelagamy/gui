@@ -17,6 +17,7 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 nltk.download('wordnet')
 from nltk.stem.wordnet import WordNetLemmatizer
+from langdetect import detect
 
 # function to plot most frequent terms
 def freq_words(x, terms = 30):
@@ -67,14 +68,34 @@ if uploaded_file is not None:
   st.write(df)
 else:
   st.stop()
-  
 
+
+# Applying language detection
 df.dropna(inplace=True)
+text = df['review-text'].astype(str)
+langdet = []
+# Data preprocessing
+for i in range(len(aj_df)):
+    try:
+        lang=detect(text[i])
+    except:
+        lang='no'
+
+    langdet.append(lang)
+df['detect'] = langdet
+
+# Select language here
+df = df[df['detect'] == 'en']
+
+
 # Applying sentiment analysis
 df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
 df['TextBlob_Analysis'] = df['TextBlob_Polarity'].apply(get_analysis)
 
-# Data preprocessing
+
+
+
+
 
 # Splitting data
 bad_reviews = df[df['TextBlob_Analysis'] == 'Negative']
