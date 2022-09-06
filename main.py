@@ -262,5 +262,5 @@ brief_text="there is a total of {num_reviews} for the product {asin_num} of thos
     positive_num= len(good_reviews),
     negative_num= len(bad_reviews),
     pros = good_topic_info['name'],
-    cons= bad_topic_info['name])
+    cons= bad_topic_info['name'])
 st.write(brief_text)
