@@ -157,7 +157,7 @@ final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'Tex
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-topic_model = BERTopic(language= 'en', n_gram_range= (3,4), diversity=.6, verbose=True, nr_topics='auto')
+topic_model = BERTopic(language= 'en', n_gram_range= (1,3), diversity=.6, verbose=True, nr_topics='auto')
 
 # Models
 if tab == 'Positive Review':
