@@ -261,6 +261,6 @@ brief_text="there is a total of {num_reviews} for the product {asin_num} of thos
     num_en= len(df[df['detect']=='en']),
     positive_num= len(good_reviews),
     negative_num= len(bad_reviews),
-    pros = good_topic_info['Name'],
-    cons= bad_topic_info['Name'])
+    pros = good_topic_info[:10],
+    cons= bad_topic_info[:10])
 st.write(brief_text)
