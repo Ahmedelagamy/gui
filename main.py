@@ -257,10 +257,10 @@ st.download_button(
 
 brief_text="there is a total of {num_reviews} for the product {asin_num} of those, there are {num_en} english reviews .there are {positive_num} positive reviews and {negative_num} negative reviews. the top keywords and topics mentioned in positive reviews include{pros} while the most talked about cons are {cons}".format(
     num_reviews= len(df),
-    asin_num = df['asin'],
+    asin_num = df['asin'].unique(),
     num_en= len(df[df['detect']=='en']),
     positive_num= len(good_reviews),
     negative_num= len(bad_reviews),
-    pros = good_topic_info,
-    cons= bad_topic_info)
+    pros = good_topic_info['name'],
+    cons= bad_topic_info['name])
 st.write(brief_text)
