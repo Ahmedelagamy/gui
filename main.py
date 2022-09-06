@@ -241,7 +241,7 @@ else:
      mime='text/csv',
      file_name='negative_analysis.csv')
 
-final_df.drop(['TextBlob_Polarity','review-text'], axis= 1, inplace = True)
+final_df.drop(['TextBlob_Polarity'], axis= 1, inplace = True)
 
 st.write(final_df)
 
