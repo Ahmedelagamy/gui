@@ -151,7 +151,8 @@ good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 
 final_df= df.groupby(['asin']).mean()
-
+good_topic_info= pd.DataFrame()
+bad_topic_info= pd.DataFrame
 # Tab Structure
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
@@ -166,7 +167,7 @@ if tab == 'Positive Review':
     
 # Fixing small dataset bug
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-       good_reviews.extend(2*good_reviews)
+       good_reviews.extend(3*good_reviews)
 
     good_model = topic_model.fit(good_reviews)
     """# Good Reviews model insight"""
@@ -208,9 +209,9 @@ else:
     #Accounting for small dataset
     
     if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-       bad_reviews.extend(bad_reviews)
+       bad_reviews.extend(3*bad_reviews)
     st.dataframe(bad_reviews)
-    bad_model = topic_model.fit(2*bad_reviews)
+    bad_model = topic_model.fit(bad_reviews)
     # Topics
     
     st.write(bad_model.get_topic_info())
@@ -247,8 +248,19 @@ st.write(final_df)
 
 final_df =final_df.to_csv(index=False).encode('utf-8')
 
+
 st.download_button(
      label="Download Dataframe analysis",
      data=final_df,
      mime='text/csv',
      file_name='full_data_analysis.csv')
+
+brief_text="there is a total of {num_reviews} for the product {asin_num} of those, there are {num_en} english reviews .there are {positive_num} positive reviews and {negative_num} negative reviews. the top keywords and topics mentioned in positive reviews include{pros} while the most talked about cons are {cons}".format(
+    num_reviews= len(df),
+    asin_num = df['asin'],
+    num_en= len(df[df['detect']=='en']),
+    positive_num= len(good_reviews),
+    negative_num= len(bad_reviews),
+    pros = good_topic_info
+    cons= bad_topic_info)
+st.write(brief_text)
