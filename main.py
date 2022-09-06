@@ -75,7 +75,7 @@ df.dropna(inplace=True)
 text = df['review-text'].astype(str)
 langdet = []
 # Data preprocessing
-for i in range(len(aj_df)):
+for i in range(len(df)):
     try:
         lang=detect(text[i])
     except:
