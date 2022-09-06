@@ -198,7 +198,12 @@ if tab == 'Positive Review':
     good_topic_info = good_model.get_topic_info()
     good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     st.write(good_topic_info)
-
+    
+    st.download_button(
+     label="Download Positive Analysis",
+     data=good_topic_info,
+     mime='text/csv',
+     file_name='negative_analysis.csv')
 else:
 
     """# Bad reviews model insight"""
@@ -234,6 +239,11 @@ else:
     bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
     st.write(bad_topic_info)
     
+    st.download_button(
+     label="Download Negative Analysis",
+     data=bad_topic_info,
+     mime='text/csv',
+     file_name='negative_analysis.csv')
 
 final_df.drop(['TextBlob_Polarity','review-text'], axis= 1, inplace = True)
 
