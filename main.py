@@ -63,6 +63,7 @@ st.markdown("This application is a streamlit deployment to automate analysis")
 
 # Loading Data
 uploaded_file = st.file_uploader("Choose a file")
+
 if uploaded_file is not None:
   df = pd.read_excel(uploaded_file)
   st.write(df)
@@ -72,16 +73,18 @@ else:
 
 # Applying language detection
 df.dropna(inplace=True)
-text = df['review-text'].astype(str)
+
+text_col = df['review-text'].astype(str)
 langdet = []
 # Data preprocessing
 for i in range(len(df)):
     try:
-        lang=detect(text[i])
+        lang=detect(text_col[i])
     except:
         lang='no'
 
     langdet.append(lang)
+
 df['detect'] = langdet
 
 # Select language here
@@ -91,10 +94,6 @@ df = df[df['detect'] == 'en']
 # Applying sentiment analysis
 df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
 df['TextBlob_Analysis'] = df['TextBlob_Polarity'].apply(get_analysis)
-
-
-
-
 
 
 # Splitting data
@@ -151,7 +150,7 @@ def clean_text(dataframe, col_name):
 good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 
-final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).count()
+final_df= df.groupby(['asin', 'product-name', 'rating-count', 'rating-avg', 'TextBlob_Analysis']).mean()
 
 # Tab Structure
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
@@ -164,6 +163,7 @@ if tab == 'Positive Review':
     
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
+    
 # Fixing small dataset bug
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
        good_reviews.extend(2*good_reviews)
@@ -251,4 +251,4 @@ st.download_button(
      label="Download cons",
      data=final_df,
      mime='text/csv',
-     file_name='large_df.csv')
+     file_name='full_data_analysis.csv')
