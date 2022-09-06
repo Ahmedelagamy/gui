@@ -164,15 +164,11 @@ if tab == 'Positive Review':
     
     st.subheader('Positive Reviews')
     st.dataframe(good_reviews)
-    
-    
+# Fixing small dataset bug
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
        good_reviews.extend(2*good_reviews)
 
     good_model = topic_model.fit(good_reviews)
-
-  
-
     """# Good Reviews model insight"""
 
     
@@ -198,7 +194,7 @@ if tab == 'Positive Review':
     good_topic_info = good_model.get_topic_info()
     good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     st.write(good_topic_info)
-    
+    good_topic_info =good_topic_info.to_csv(index=False).encode('utf-8')
     st.download_button(
      label="Download Positive Analysis",
      data=good_topic_info,
@@ -238,7 +234,7 @@ else:
     bad_topic_info = bad_model.get_topic_info()
     bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
     st.write(bad_topic_info)
-    
+    bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
     st.download_button(
      label="Download Negative Analysis",
      data=bad_topic_info,
