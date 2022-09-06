@@ -150,7 +150,7 @@ def clean_text(dataframe, col_name):
 good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 
-final_df= df.groupby(['asin']).median()
+final_df= df.groupby(['asin']).mean()
 good_topic_info= pd.DataFrame()
 bad_topic_info= pd.DataFrame
 # Tab Structure
