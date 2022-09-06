@@ -88,17 +88,17 @@ for i in range(len(df)):
 df['detect'] = langdet
 
 # Select language here
-df = df[df['detect'] == 'en']
+en_df = df[df['detect'] == 'en']
 
 
 # Applying sentiment analysis
-df['TextBlob_Polarity'] = df['review-text'].astype(str).apply(get_polarity)
-df['TextBlob_Analysis'] = df['TextBlob_Polarity'].apply(get_analysis)
+en_df['TextBlob_Polarity'] = en_df['review-text'].astype(str).apply(get_polarity)
+en_df['TextBlob_Analysis'] = en_df['TextBlob_Polarity'].apply(get_analysis)
 
 
 # Splitting data
-bad_reviews = df[df['TextBlob_Analysis'] == 'Negative']
-good_reviews = df[df['TextBlob_Analysis'] == 'Positive']
+bad_reviews = en_df[en_df['TextBlob_Analysis'] == 'Negative']
+good_reviews = en_df[en_df['TextBlob_Analysis'] == 'Positive']
 
 # Minor mod
 st.header('Select Stop Words')
@@ -150,7 +150,7 @@ def clean_text(dataframe, col_name):
 good_reviews = clean_text(good_reviews, 'review-text')
 bad_reviews = clean_text(bad_reviews, 'review-text')
 
-final_df= df.groupby(['asin']).mean()
+final_df= en_df.groupby(['asin']).mean()
 good_topic_info= pd.DataFrame()
 bad_topic_info= pd.DataFrame
 # Tab Structure
