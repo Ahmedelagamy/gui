@@ -248,7 +248,7 @@ st.write(final_df)
 final_df =final_df.to_csv(index=False).encode('utf-8')
 
 st.download_button(
-     label="Download cons",
+     label="Download Dataframe analysis",
      data=final_df,
      mime='text/csv',
      file_name='full_data_analysis.csv')
