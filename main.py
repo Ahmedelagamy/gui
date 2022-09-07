@@ -157,7 +157,7 @@ bad_topic_info= pd.DataFrame
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-topic_model = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.6, verbose=True, nr_topics=10)
+topic_model = BERTopic(language= 'en', n_gram_range= (2,4), diversity=.5, verbose=True)
 
 # Models
 if tab == 'Positive Review':
