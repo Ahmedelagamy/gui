@@ -194,7 +194,8 @@ if tab == 'Positive Review':
     good_topic_info = good_model.get_topic_info()
     
     if len(good_reviews) < 300:
-      good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100/4)
+      good_topic_info['Count']=good_topic_info['Count']/4
+      good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     else:
       good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     
@@ -240,7 +241,8 @@ else:
 
     bad_topic_info = bad_model.get_topic_info()
     if len(bad_reviews) < 300:
-       bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100/4)
+       bad_topic_info['Count']=bad_topic_info['Count']/4
+       bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
     else:
        bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
     
