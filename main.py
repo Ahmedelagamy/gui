@@ -240,10 +240,10 @@ else:
     bad_model.get_representative_docs(doc_num)
 
     bad_topic_info = bad_model.get_topic_info()
-        if len(good_reviews) < 300:
-          bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100/4)
-        else:
-          bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
+    if len(bad_reviews) < 300:
+       bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100/4)
+    else:
+       bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
     
     st.write(bad_topic_info)
     bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
