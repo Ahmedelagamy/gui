@@ -175,11 +175,8 @@ if tab == 'Positive Review':
 
     good_model.get_topic_info()
     
-    topic_labels = good_model.generate_topic_labels(nr_words=3,
-                                                 topic_prefix=False,
-                                                 word_length=10,
-                                                 separator=", ")
-    st.write(topic_model.set_topic_labels(topic_labels))
+    topic_labels = good_model.generate_topic_labels(nr_words= 5)
+    st.write(good_model.set_topic_labels(good_model))
  
     st.write(good_model.visualize_topics())
 
