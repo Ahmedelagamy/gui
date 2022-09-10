@@ -214,8 +214,7 @@ else:
     
     if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
        bad_reviews_data.extend(3*bad_reviews_data)
-    else:
-       break
+
         
     st.dataframe(bad_reviews)
     bad_model = topic_model.fit(bad_reviews_data)
