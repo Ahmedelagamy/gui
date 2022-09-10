@@ -147,9 +147,8 @@ def clean_text(dataframe, col_name):
 
 
 # Applying function
-good_reviews = clean_text(good_reviews, 'review-text')
-bad_reviews = clean_text(bad_reviews, 'review-text')
-
+bad_reviews_data = clean_text(bad_reviews, 'review-text')
+good_reviews_data=clean_text(good_reviews, 'review-text')
 final_df= en_df.groupby(['asin']).mean()
 good_topic_info= pd.DataFrame()
 bad_topic_info= pd.DataFrame
@@ -167,9 +166,9 @@ if tab == 'Positive Review':
     
 # Fixing small dataset bug
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-       good_reviews.extend(3*good_reviews)
+       good_reviews_data.extend(3*good_reviews_data)
 
-    good_model = topic_model.fit(good_reviews)
+    good_model = topic_model.fit(good_reviews_data)
     """# Good Reviews model insight"""
 
     
@@ -193,14 +192,19 @@ if tab == 'Positive Review':
     st.write(good_model.get_representative_docs(doc_num))
     # pros
     good_topic_info = good_model.get_topic_info()
-    good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
+    
+    if len(good_reviews) < 300:
+      good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100/4)
+    else:
+      good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
+    
     st.write(good_topic_info)
     good_topic_info =good_topic_info.to_csv(index=False).encode('utf-8')
     st.download_button(
      label="Download Positive Analysis",
      data=good_topic_info,
      mime='text/csv',
-     file_name='negative_analysis.csv')
+     file_name='Positive_analysis.csv')
 else:
 
     """# Bad reviews model insight"""
@@ -209,10 +213,10 @@ else:
     #Accounting for small dataset
     
     if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-       bad_reviews.extend(3*bad_reviews)
+       bad_reviews_data.extend(3*bad_reviews_data)
         
     st.dataframe(bad_reviews)
-    bad_model = topic_model.fit(bad_reviews)
+    bad_model = topic_model.fit(bad_reviews_data)
     # Topics
     
     st.write(bad_model.get_topic_info())
@@ -234,7 +238,11 @@ else:
     bad_model.get_representative_docs(doc_num)
 
     bad_topic_info = bad_model.get_topic_info()
-    bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
+        if len(good_reviews) < 300:
+          bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100/4)
+        else:
+          bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
+    
     st.write(bad_topic_info)
     bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
     st.download_button(
