@@ -192,12 +192,6 @@ topic_model.get_topic_info()
 topic_labels = topic_model.generate_topic_labels(nr_words= 2)
 topic_model.set_topic_labels(topic_labels)
     
-st.write(topic_model.visualize_topics())
-
-st.write(topic_model.visualize_barchart())
-
-st.write(topic_model.visualize_heatmap())
-    
     
     # pros
 topic_info = topic_model.get_topic_info()
