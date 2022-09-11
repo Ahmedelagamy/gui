@@ -203,10 +203,10 @@ st.write(topic_model.visualize_heatmap())
 topic_info = topic_model.get_topic_info()
     
 if len(good_reviews) < 300:
-  topic_info['Count']=good_topic_info['Count']/4
-  topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
+  topic_info['Count']=topic_info['Count']/4
+  topic_info['percentage'] = topic_info['Count'].apply(lambda x: (x / topic_info['Count'].sum()) * 100)
 else:
-  topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
+  topic_info['percentage'] = topic_info['Count'].apply(lambda x: (x / topic_info['Count'].sum()) * 100)
     
 st.write(topic_info)
 doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
