@@ -157,7 +157,7 @@ bad_topic_info= pd.DataFrame()
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-topic_model = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.7, verbose=True, embedding_model="all-mpnet-base-v2")
+topic_model = BERTopic(language= 'en', n_gram_range= (1,2), diversity=.7, verbose=True, embedding_model="all-mpnet-base-v2")
 
 # Models
 if tab == 'Positive Review':
@@ -169,47 +169,10 @@ if tab == 'Positive Review':
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
        good_reviews_data.extend(3*good_reviews_data)
 
-    good_model = topic_model.fit(good_reviews_data)
-    good_model.save('good_model')
-    BERTopic.load("good_model")
-         
+    topic_model.fit(good_reviews_data)         
     """# Good Reviews model insight"""
-
-    
-
-    good_model.get_topic_info()
-    
-    topic_labels = good_model.generate_topic_labels(nr_words= 5)
-    good_model.set_topic_labels(topic_labels)
-    
-    st.write(good_model.visualize_topics())
-
-    st.write(good_model.visualize_barchart())
-
-    st.write(good_model.visualize_heatmap())
-    
-    
-    # pros
-    good_topic_info = good_model.get_topic_info()
-    
-    if len(good_reviews) < 300:
-      good_topic_info['Count']=good_topic_info['Count']/4
-      good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
-    else:
-      good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
-    
-    st.write(good_topic_info)
-    doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
-    st.write(good_model.get_representative_docs(doc_num))
-    good_topic_info =good_topic_info.to_csv(index=False).encode('utf-8')
-    st.download_button(
-     label="Download Positive Analysis",
-     data=good_topic_info,
-     mime='text/csv',
-     file_name='Positive_analysis.csv')
 else:
-
-    """# Bad reviews model insight"""
+        """# Bad reviews model insight"""
     # Feature Engineering
     st.subheader('Negative Reviews')
     #Accounting for small dataset
@@ -219,42 +182,38 @@ else:
 
         
     st.dataframe(bad_reviews_data)
-    bad_model = topic_model.fit(bad_reviews_data)
-    # Topics
-    
-    st.write(bad_model.get_topic_info())
-    doc_num_2 = int(st.number_input('enter the number of topic to explore', key= 2, value= 0))
-    # Labels
-    st.write(bad_model.generate_topic_labels(nr_words=6, separator=", "))
-    # Representative docs
-    st.write(bad_model.get_representative_docs(doc_num_2))
-    
-    # Topic visualization
-    # Bar chart
-    st.write(bad_model.visualize_barchart())
-    # Term Rank
-    st.write(bad_model.visualize_term_rank())
-    # Heatmap
-    bad_model.visualize_heatmap()
-    # cons
-    bad_model.generate_topic_labels(nr_words=6, separator=',')
-    bad_model.get_representative_docs(doc_num)
+    topic_model.fit(bad_reviews_data)
 
-    bad_topic_info = bad_model.get_topic_info()
-    if len(bad_reviews) < 300:
-       bad_topic_info['Count']=bad_topic_info['Count']/4
-       bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
-    else:
-       bad_topic_info['percentage'] = bad_topic_info['Count'].apply(lambda x: (x / bad_topic_info['Count'].sum()) * 100)
+topic_model.get_topic_info()
     
-    st.write(bad_topic_info)
-    bad_topic_info =bad_topic_info.to_csv(index=False).encode('utf-8')
-    st.download_button(
-     label="Download Negative Analysis",
-     data=bad_topic_info,
+topic_labels = topic_model.generate_topic_labels(nr_words= 2)
+topic_model.set_topic_labels(topic_labels)
+    
+st.write(topic_model.visualize_topics())
+
+st.write(topic_model.visualize_barchart())
+
+st.write(topic_model.visualize_heatmap())
+    
+    
+    # pros
+topic_info = topic_model.get_topic_info()
+    
+if len(good_reviews) < 300:
+  topic_info['Count']=good_topic_info['Count']/4
+  topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
+else:
+  topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
+    
+st.write(topic_info)
+doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
+st.write(topic_model.get_representative_docs(doc_num))
+topic_info =topic_info.to_csv(index=False).encode('utf-8')
+st.download_button(
+     label="Download Analysis",
+     data=topic_info,
      mime='text/csv',
-     file_name='negative_analysis.csv')
-
+     file_name='analysis.csv')
 final_df.drop(['TextBlob_Polarity'], axis= 1, inplace = True)
 
 st.write(final_df)
