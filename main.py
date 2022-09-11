@@ -171,10 +171,10 @@ if tab == 'Positive Review':
   else:
     break
   topic_model.fit(good_reviews_data)         
-    """# Good Reviews model insight"""
+
 else:
   
-        """# Bad reviews model insight"""
+     
     # Feature Engineering
   st.subheader('Negative Reviews')
     #Accounting for small dataset
