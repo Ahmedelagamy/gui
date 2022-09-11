@@ -156,7 +156,7 @@ bad_topic_info= pd.DataFrame
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-topic_model = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.7, verbose=True)
+topic_model = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.7, verbose=True, embedding_model="all-mpnet-base-v2")
 
 # Models
 if tab == 'Positive Review':
@@ -169,6 +169,9 @@ if tab == 'Positive Review':
        good_reviews_data.extend(3*good_reviews_data)
 
     good_model = topic_model.fit(good_reviews_data)
+    good_model.save('good_model')
+    BERTopic.load("good_model")
+         
     """# Good Reviews model insight"""
 
     
@@ -177,16 +180,14 @@ if tab == 'Positive Review':
     
     topic_labels = good_model.generate_topic_labels(nr_words= 5)
     good_model.set_topic_labels(topic_labels)
- 
+    
     st.write(good_model.visualize_topics())
 
     st.write(good_model.visualize_barchart())
 
     st.write(good_model.visualize_heatmap())
     
-    doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
     
-    st.write(good_model.get_representative_docs(doc_num))
     # pros
     good_topic_info = good_model.get_topic_info()
     
@@ -197,6 +198,8 @@ if tab == 'Positive Review':
       good_topic_info['percentage'] = good_topic_info['Count'].apply(lambda x: (x / good_topic_info['Count'].sum()) * 100)
     
     st.write(good_topic_info)
+    doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
+    st.write(good_model.get_representative_docs(doc_num))
     good_topic_info =good_topic_info.to_csv(index=False).encode('utf-8')
     st.download_button(
      label="Download Positive Analysis",
