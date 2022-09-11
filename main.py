@@ -167,8 +167,9 @@ if tab == 'Positive Review':
     
 # Fixing small dataset bug
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-       good_reviews_data.extend(3*good_reviews_data)
-
+      good_reviews_data.extend(3*good_reviews_data)
+    else:
+      break
     topic_model.fit(good_reviews_data)         
     """# Good Reviews model insight"""
 else:
