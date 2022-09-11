@@ -104,8 +104,9 @@ good_reviews = en_df[en_df['TextBlob_Analysis'] == 'Positive']
 st.header('Select Stop Words')
 
 custom_stopwords = st.text_input('Enter Stopword')
-cutom_stopwords = custom_stopwords.split()
-final_stop_words = set(stopwords.words("english")).union(custom_stopwords)
+custom_stopwords = custom_stopwords.split()
+nltk_Stop= stopwords.words("english")
+final_stop_words = nltk_Stop + custom_stopwords
 
 def clean_text(dataframe, col_name):
     
