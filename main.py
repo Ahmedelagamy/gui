@@ -148,10 +148,10 @@ def clean_text(dataframe, col_name):
 
 # Applying function
 bad_reviews_data = clean_text(bad_reviews, 'review-text')
-good_reviews_data=clean_text(good_reviews, 'review-text')
+good_reviews_data= clean_text(good_reviews, 'review-text')
 final_df= en_df.groupby(['asin']).mean()
 good_topic_info= pd.DataFrame()
-bad_topic_info= pd.DataFrame
+bad_topic_info= pd.DataFrame()
 # Tab Structure
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
@@ -162,7 +162,7 @@ topic_model = BERTopic(language= 'en', n_gram_range= (2,3), diversity=.7, verbos
 if tab == 'Positive Review':
     
     st.subheader('Positive Reviews')
-    st.dataframe(good_reviews)
+    st.dataframe(good_reviews_data)
     
 # Fixing small dataset bug
     if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
@@ -217,7 +217,7 @@ else:
        bad_reviews_data.extend(3*bad_reviews_data)
 
         
-    st.dataframe(bad_reviews)
+    st.dataframe(bad_reviews_data)
     bad_model = topic_model.fit(bad_reviews_data)
     # Topics
     
