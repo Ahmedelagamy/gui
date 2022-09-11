@@ -162,28 +162,29 @@ topic_model = BERTopic(language= 'en', n_gram_range= (1,2), diversity=.7, verbos
 # Models
 if tab == 'Positive Review':
     
-    st.subheader('Positive Reviews')
-    st.dataframe(good_reviews_data)
+  st.subheader('Positive Reviews')
+  st.dataframe(good_reviews_data)
     
 # Fixing small dataset bug
-    if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
-      good_reviews_data.extend(3*good_reviews_data)
-    else:
-      break
-    topic_model.fit(good_reviews_data)         
+  if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
+    good_reviews_data.extend(3*good_reviews_data)
+  else:
+    break
+  topic_model.fit(good_reviews_data)         
     """# Good Reviews model insight"""
 else:
+  
         """# Bad reviews model insight"""
     # Feature Engineering
-    st.subheader('Negative Reviews')
+  st.subheader('Negative Reviews')
     #Accounting for small dataset
     
-    if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
+  if len(bad_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
         bad_reviews_data.extend(3*bad_reviews_data)
 
         
-    st.dataframe(bad_reviews_data)
-    topic_model.fit(bad_reviews_data)
+  st.dataframe(bad_reviews_data)
+  topic_model.fit(bad_reviews_data)
 
 topic_model.get_topic_info()
     
