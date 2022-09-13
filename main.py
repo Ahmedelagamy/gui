@@ -151,8 +151,7 @@ def clean_text(dataframe, col_name):
 bad_reviews_data = clean_text(bad_reviews, 'review-text')
 good_reviews_data= clean_text(good_reviews, 'review-text')
 final_df= en_df.groupby(['asin']).mean()
-good_topic_info= pd.DataFrame()
-bad_topic_info= pd.DataFrame()
+
 # Tab Structure
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
