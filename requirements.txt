@@ -1,4 +1,4 @@
-bertopic==0.11.0
+bertopic==0.12.0
 nltk==3.7
 pandas==1.4.2
 streamlit==1.12.0
