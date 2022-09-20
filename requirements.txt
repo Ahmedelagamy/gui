@@ -1,5 +1,5 @@
 pip==22.2.2 
-bertopic~=0.12.0
+bertopic
 langdetect~=1.0.9
 nltk~=3.7
 pandas~=1.4.4
