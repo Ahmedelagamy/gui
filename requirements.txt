@@ -7,4 +7,4 @@ streamlit==1.12.2
 textblob~=0.17.1
 umap~=0.1.1
 umap_learn~=0.5.3
- --upgrade git+https://github.com/scikit-learn-contrib/hdbscan.git#egg=hdbscan
+hdbscan
