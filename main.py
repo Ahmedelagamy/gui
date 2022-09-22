@@ -144,6 +144,8 @@ final_df= en_df.groupby(['asin']).mean()
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
+umap_model = UMAP(n_neighbors=15, n_components=5,
+                  min_dist=0.0, umap_model=umap_model, metric='cosine', random_state=42)
 topic_model = BERTopic(language= 'en', n_gram_range= (2,3), verbose=True, embedding_model="all-mpnet-base-v2")
 
 # Models
@@ -153,7 +155,7 @@ if tab == 'Positive Review':
   st.dataframe(good_reviews_data)
     
 # Fixing small dataset bug
-  if len(good_reviews) < 300: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
+  if len(good_reviews) < 200: # Workaround if not enough documents https://github.com/MaartenGr/BERTopic/issues/97 , https://github.com/MaartenGr/Concept/issues/5
     good_reviews_data.extend(3*good_reviews_data)
   else:
     pass
