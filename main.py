@@ -188,7 +188,7 @@ topic_model.set_topic_labels(topic_labels)
     # pros
 topic_info = topic_model.get_topic_info()
     
-if len(good_reviews) < 300:
+if len(good_reviews) < 200:
   topic_info['Count']=topic_info['Count']/4
   topic_info['percentage'] = topic_info['Count'].apply(lambda x: (x / topic_info['Count'].sum()) * 100)
 else:
@@ -198,6 +198,7 @@ st.write(topic_info)
 doc_num = int(st.number_input('enter the number of topic to explore', value= 0))
 st.write(topic_model.get_representative_docs(doc_num))
 topic_info =topic_info.to_csv(index=False).encode('utf-8')
+
 st.download_button(
      label="Download Analysis",
      data=topic_info,
