@@ -3,7 +3,7 @@
 
 @author: Ahmed El Agamy
 """
-@st.cache
+
 import pandas as pd
 import streamlit as st
 from bertopic import BERTopic
