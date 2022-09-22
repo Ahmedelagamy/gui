@@ -9,7 +9,7 @@ import streamlit as st
 from bertopic import BERTopic
 from textblob import TextBlob
 from umap import UMAP
-import hdbscan
+from hdbscan import HDBSCAN
 import re
 import nltk
 nltk.download('stopwords')
@@ -144,9 +144,12 @@ final_df= en_df.groupby(['asin']).mean()
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-umap_model = UMAP(n_neighbors=15, n_components=5,
-                  min_dist=0.0, umap_model=umap_model, metric='cosine', random_state=42)
-topic_model = BERTopic(language= 'en', n_gram_range= (2,3), verbose=True, embedding_model="all-mpnet-base-v2")
+from bertopic import BERTopic
+
+# Create instances of GPU-accelerated UMAP and HDBSCAN
+umap_model = UMAP(n_components=10, n_neighbors=15, min_dist=0.0, random_state= 42)
+
+topic_model = BERTopic(language= 'en',umap_model=umap_model, n_gram_range= (2,4), verbose=True, embedding_model="all-mpnet-base-v2")
 
 # Models
 if tab == 'Positive Review':
