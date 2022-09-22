@@ -3,8 +3,8 @@
 
 @author: Ahmed El Agamy
 """
+@st.cache(allow_output_mutation=True)
 import pandas as pd
-# Imports
 import streamlit as st
 from bertopic import BERTopic
 from textblob import TextBlob
