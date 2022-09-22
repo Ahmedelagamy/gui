@@ -9,3 +9,4 @@ umap~=0.1.1
 umap_learn~=0.5.3
 hdbscan
 joblib==1.1.0
+openpyxl
