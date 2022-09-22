@@ -144,7 +144,7 @@ final_df= en_df.groupby(['asin']).mean()
 tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 
 # Insert containers separated into tabs:
-topic_model = BERTopic(language= 'en', n_gram_range= (2,3), verbose=True, embedding_model="all-mpnet-base-v2",  random_state=42)
+topic_model = BERTopic(language= 'en', n_gram_range= (2,3), verbose=True, embedding_model="all-mpnet-base-v2")
 
 # Models
 if tab == 'Positive Review':
