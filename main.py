@@ -147,7 +147,7 @@ tab = st.sidebar.selectbox('Pick one', ['Positive Review', 'Negative Review'])
 from bertopic import BERTopic
 
 # Create instances of GPU-accelerated UMAP and HDBSCAN
-umap_model = UMAP(n_components=10, n_neighbors=15, min_dist=0.0, random_state= 42)
+umap_model = UMAP(n_components=5, n_neighbors=15, min_dist=0.0, random_state= 42)
 
 topic_model = BERTopic(language= 'en',umap_model=umap_model, n_gram_range= (2,4), verbose=True, embedding_model="all-mpnet-base-v2")
 
