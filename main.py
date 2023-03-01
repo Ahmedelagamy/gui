@@ -19,9 +19,9 @@ from collections import Counter
 stop_words = set(stopwords.words('english'))
 
 # Code for project structure
-st.image('White Piovis Logo.png')
-st.title("Piovis Automate")
-st.sidebar.title('Review analyzer GUI')
+#st.image('White Piovis Logo.png')
+st.title("A different story")
+st.sidebar.title('Story analyzer GUI')
 
 # Reading reviews
 uploaded_file = st.file_uploader("Choose a file")
