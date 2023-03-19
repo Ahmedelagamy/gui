@@ -16,6 +16,11 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from collections import Counter
+import subprocess
+
+@st.cache_resource
+def download_en_core_web_sm():
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
 stop_words = set(stopwords.words('english'))
 
 # Code for project structure
